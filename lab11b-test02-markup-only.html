@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 11b</title>
+    <link href="lab11b-test02-styles.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="react-container"></div>
+
+    <script type="text/babel">
+      const initialPhotos = [
+        {
+          id: 1,
+          title: "Calgary Central Library",
+          city: "Calgary",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/48844390243.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/48844390243.jpg"
+        },
+        {
+          id: 2,
+          title: "Peace Bridge",
+          city: "Calgary",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/48844900556.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/48844900556.jpg"
+        },
+        {
+          id: 3,
+          title: "The Bow",
+          city: "Calgary",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/48844533598.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/48844533598.jpg"
+        },
+        {
+          id: 4,
+          title: "National Music Centre",
+          city: "Calgary",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/48844940962.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/48844940962.jpg"
+        },
+        {
+          id: 5,
+          title: "Ascending Sulpher Mountain",
+          city: "Banff",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/6114904363.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/6114904363.jpg"
+        },
+        {
+          id: 6,
+          title: "At top of Sulpher Mountain",
+          city: "Banff",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/6115455110.JPG",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/6115455110.JPG"
+        },
+        {
+          id: 7,
+          title: "Lunenburg Port",
+          city: "Lunenburg",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/5856697109.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/5856697109.jpg"
+        },
+        {
+          id: 8,
+          title: "Central United Church",
+          city: "Lunenburg",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/5856658791.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/5856658791.jpg"
+        },
+        {
+          id: 9,
+          title: "Peggy's Cove",
+          city: "Dartmouth",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/5856616479.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/5856616479.jpg"
+        },
+        {
+          id: 10,
+          title: "Near Peggy's Cove",
+          city: "Dartmouth",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/5856654945.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/5856654945.jpg"
+        },
+        {
+          id: 11,
+          title: "Annapolis Royal",
+          city: "Digby",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/5857298322.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/5857298322.jpg"
+        },
+        {
+          id: 12,
+          title: "Peace Bridge at Night",
+          city: "Calgary",
+          country: "Canada",
+          thumb: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/48848276841.jpg",
+          full: "http://www.randyconnolly.com/funwebdev/3rd/images/travel/medium640/48848276841.jpg"
+        }
+      ];
+
+      const Header = () => {
+        return (
+          <header className="header">
+            <div className="header-titles">
+              <h1>Travel Image App</h1>
+              <p>Using create-react-app</p>
+            </div>
+            <nav>
+              <button>About</button>
+              <button>Upload</button>
+              <button>Download</button>
+            </nav>
+          </header>
+        );
+      };
+
+      const PhotoItem = ({ photo, onView, onFavorite }) => {
+        return (
+          <div className="photoBox">
+            <figure>
+              <img
+                title={photo.title}
+                alt={photo.title}
+                src={photo.thumb}
+                className="photoThumb"
+              />
+            </figure>
+            <div>
+              <h3>{photo.title}</h3>
+              <p>{photo.city},{photo.country}</p>
+              <button onClick={() => onView(photo)}>View</button>
+              <button onClick={() => onFavorite(photo)}>❤</button>
+            </div>
+          </div>
+        );
+      };
+
+      const PhotoList = ({ photos, onView, setFavorites }) => {
+        const addToFavorites = (photo) => {
+          setFavorites((prev) => {
+            const next = [...prev, photo];
+            console.log("Favorites after add:", next);
+            console.log(
+              "Favorites (titles, in order):",
+              next.map((p) => p.title)
+            );
+            return next;
+          });
+        };
+
+        return (
+          <article className="photos">
+            {photos.map((photo) => (
+              <PhotoItem
+                key={photo.id}
+                photo={photo}
+                onView={onView}
+                onFavorite={addToFavorites}
+              />
+            ))}
+          </article>
+        );
+      };
+
+      const FavoriteItem = ({ photo, index, onRemove }) => {
+        return (
+          <div
+            className="favorite-item"
+            onClick={() => onRemove(index)}
+          >
+            <img
+              src={photo.thumb}
+              alt={photo.title}
+              title={photo.title}
+              className="photoThumb"
+            />
+          </div>
+        );
+      };
+
+      const FavoriteBar = ({ favorites, setFavorites }) => {
+        const [favoritesVisible, setFavoritesVisible] = React.useState(true);
+
+        const removeFavoriteAt = (index) => {
+          setFavorites((prev) => {
+            const next = prev.filter((_, i) => i !== index);
+            console.log("Favorites after remove (index " + index + "):", next);
+            console.log(
+              "Favorites (titles, in order):",
+              next.map((p) => p.title)
+            );
+            return next;
+          });
+        };
+
+        return (
+          <section className="favorites">
+            <span>Favorites</span>
+            <button
+              type="button"
+              className="favorites-toggle"
+              onClick={() => setFavoritesVisible((v) => !v)}
+            >
+              {favoritesVisible ? "Hide" : "Show"}
+            </button>
+            {favoritesVisible &&
+              favorites.map((photo, index) => (
+                <FavoriteItem
+                  key={`${photo.id}-${index}`}
+                  photo={photo}
+                  index={index}
+                  onRemove={removeFavoriteAt}
+                />
+              ))}
+          </section>
+        );
+      };
+
+      const PhotoDetailsForm = ({ selectedPhoto, onEdit }) => {
+        return (
+          <article className="details">
+            <div className="detailsPhotoBox">
+              <form className="photoForm">
+                <legend>Edit Photo Details</legend>
+                <img src={selectedPhoto.full} alt={selectedPhoto.title} />
+
+                <label>Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={selectedPhoto.title}
+                  onChange={onEdit}
+                />
+
+                <label>City</label>
+                <input
+                  type="text"
+                  name="city"
+                  value={selectedPhoto.city}
+                  onChange={onEdit}
+                />
+
+                <label>Country</label>
+                <input
+                  type="text"
+                  name="country"
+                  value={selectedPhoto.country}
+                  onChange={onEdit}
+                />
+              </form>
+            </div>
+          </article>
+        );
+      };
+
+      const App = () => {
+        const [photos, setPhotos] = React.useState(initialPhotos);
+        const [selectedPhoto, setSelectedPhoto] = React.useState(initialPhotos[0]);
+        const [favorites, setFavorites] = React.useState([]);
+
+        const handleView = (photo) => {
+          setSelectedPhoto(photo);
+        };
+
+        const handleEdit = (event) => {
+          const { name, value } = event.target;
+
+          const updatedSelectedPhoto = {
+            ...selectedPhoto,
+            [name]: value
+          };
+
+          setSelectedPhoto(updatedSelectedPhoto);
+
+          const updatedPhotos = photos.map((photo) =>
+            photo.id === selectedPhoto.id
+              ? { ...photo, [name]: value }
+              : photo
+          );
+
+          setPhotos(updatedPhotos);
+        };
+
+        return (
+          <main>
+            <Header />
+            <FavoriteBar favorites={favorites} setFavorites={setFavorites} />
+            <section className="container">
+              <PhotoList
+                photos={photos}
+                onView={handleView}
+                setFavorites={setFavorites}
+              />
+              <PhotoDetailsForm
+                selectedPhoto={selectedPhoto}
+                onEdit={handleEdit}
+              />
+            </section>
+          </main>
+        );
+      };
+
+      ReactDOM.render(<App />, document.getElementById("react-container"));
+    </script>
+  </body>
+</html>
